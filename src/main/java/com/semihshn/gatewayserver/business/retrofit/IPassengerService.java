@@ -14,6 +14,6 @@ public interface IPassengerService {
     @GET("/api/passengers/{passengerId}")
     Call<JsonElement> getPassengerById(@Path("passengerId") Long passengerId);
 
-    //@GET("/api/passengers/{passengerId}")
-    //Call<JsonElement> getPassengerOfAuthorizedUser(@Path("passengerId") Long passengerId);
+    @GET("/api/passengers/{userId}")
+    Call<JsonElement> getPassengerOfAuthorizedUser(@Path("userId") Long userId);
 }

@@ -28,4 +28,10 @@ public class PassengerService {
     {
         return RetrofitUtil.executeInBlock(passengerService.getPassengerById(passengerId));
     }
+
+    public JsonElement getPassengerOfAuthorizedUser(Long userId)
+    {
+        return RetrofitUtil.executeInBlock(passengerService.getPassengerOfAuthorizedUser(userId));
+    }
+
 }

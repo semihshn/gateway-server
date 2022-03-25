@@ -27,4 +27,9 @@ public class DriverService {
         return RetrofitUtil.executeInBlock(driverService.getDriverById(driverId));
     }
 
+    public JsonElement getDriverOfAuthorizedUser(Long userId)
+    {
+        return RetrofitUtil.executeInBlock(driverService.getDriverOfAuthorizedUser(userId));
+    }
+
 }
