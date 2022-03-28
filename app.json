@@ -1,0 +1,8 @@
+{
+  "name": "smh-gateway-microservice",
+  "buildpacks": [
+    {
+      "url": "heroku/java"
+    }
+  ]
+}
