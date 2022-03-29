@@ -33,7 +33,7 @@ public class PassengerController {
         return ResponseEntity.ok(passengerService.getPassengerById(passengerId));
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("users/{userId}")
     public ResponseEntity<?> getPassengerOfAuthorizedUser(@PathVariable Long userId)
     {
         return ResponseEntity.ok(passengerService.getPassengerOfAuthorizedUser(userId));
