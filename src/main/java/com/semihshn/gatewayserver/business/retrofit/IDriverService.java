@@ -14,6 +14,6 @@ public interface IDriverService {
     @GET("/api/drivers/{driverId}")
     Call<JsonElement> getDriverById(@Path("driverId") Long driverId);
 
-    @GET("/api/drivers/{userId}")
+    @GET("/api/drivers/users/{userId}")
     Call<JsonElement> getDriverOfAuthorizedUser(@Path("userId") Long userId);
 }

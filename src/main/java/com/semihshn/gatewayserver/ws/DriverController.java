@@ -2,7 +2,6 @@ package com.semihshn.gatewayserver.ws;
 
 import com.google.gson.JsonElement;
 import com.semihshn.gatewayserver.business.DriverService;
-import com.semihshn.gatewayserver.business.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,7 @@ public class DriverController {
         return ResponseEntity.ok(driverService.getDriverById(driverId));
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("authed/{userId}")
     public ResponseEntity<?> getDriverOfAuthorizedUser(@PathVariable Long userId)
     {
         return ResponseEntity.ok(driverService.getDriverOfAuthorizedUser(userId));
