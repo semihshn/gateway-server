@@ -2,7 +2,7 @@ package com.semihshn.gatewayserver.business;
 
 import com.semihshn.gatewayserver.dataAccess.UserDao;
 import com.semihshn.gatewayserver.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserDao userDao;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserDao userDao;
+
+    private final PasswordEncoder passwordEncoder;
 
     public User saveUser(User user)
     {
