@@ -1,6 +1,5 @@
 package com.semihshn.gatewayserver.ws;
 
-import com.google.gson.JsonElement;
 import com.semihshn.gatewayserver.business.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,7 @@ public class DriverController {
     private DriverService driverService;
 
     @PostMapping
-    public ResponseEntity<?> saveDriver(@RequestBody JsonElement driver)
+    public ResponseEntity<?> saveDriver(@RequestBody Object driver)
     {
         return ResponseEntity.ok(driverService.saveDriver(driver));
     }

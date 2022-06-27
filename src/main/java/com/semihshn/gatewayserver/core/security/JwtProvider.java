@@ -82,6 +82,7 @@ public class JwtProvider {
         {
             return null;
         }
+
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(jwtPublicKey)
                 .build()

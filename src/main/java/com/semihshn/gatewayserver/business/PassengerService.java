@@ -1,8 +1,6 @@
 package com.semihshn.gatewayserver.business;
 
-import com.google.gson.JsonElement;
-import com.semihshn.gatewayserver.business.retrofit.IPassengerService;
-import com.semihshn.gatewayserver.core.utilities.RetrofitUtil;
+import com.semihshn.gatewayserver.business.openFeign.IPassengerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,24 +12,24 @@ public class PassengerService {
     @Autowired
     private IPassengerService passengerService;
 
-    public JsonElement savePassenger(JsonElement requestBody)
+    public Object savePassenger(Object requestBody)
     {
-        return RetrofitUtil.executeInBlock(passengerService.savePassenger(requestBody));
+        return passengerService.savePassenger(requestBody);
     }
 
     public void deletePassenger(Long passengerId)
     {
-        RetrofitUtil.executeInBlock(passengerService.deletePassenger(passengerId));
+        passengerService.deletePassenger(passengerId);
     }
 
-    public JsonElement getPassengerById(Long passengerId)
+    public Object getPassengerById(Long passengerId)
     {
-        return RetrofitUtil.executeInBlock(passengerService.getPassengerById(passengerId));
+        return passengerService.getPassengerById(passengerId);
     }
 
-    public JsonElement getPassengerOfAuthorizedUser(Long userId)
+    public Object getPassengerOfAuthorizedUser(Long userId)
     {
-        return RetrofitUtil.executeInBlock(passengerService.getPassengerOfAuthorizedUser(userId));
+        return passengerService.getPassengerOfAuthorizedUser(userId);
     }
 
 }

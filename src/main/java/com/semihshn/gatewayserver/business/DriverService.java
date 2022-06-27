@@ -1,8 +1,6 @@
 package com.semihshn.gatewayserver.business;
 
-import com.google.gson.JsonElement;
-import com.semihshn.gatewayserver.business.retrofit.IDriverService;
-import com.semihshn.gatewayserver.core.utilities.RetrofitUtil;
+import com.semihshn.gatewayserver.business.openFeign.IDriverService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,24 +10,21 @@ public class DriverService {
     @Autowired
     private IDriverService driverService;
 
-    public JsonElement saveDriver(JsonElement driver)
-    {
-        return RetrofitUtil.executeInBlock(driverService.saveDriver(driver));
+    public Object saveDriver(Object driver) {
+        return driverService.saveDriver(driver);
+
     }
 
-    public void deleteDriver(Long driverId)
-    {
-        RetrofitUtil.executeInBlock(driverService.deleteDriver(driverId));
+    public void deleteDriver(Long driverId) {
+        driverService.deleteDriver(driverId);
     }
 
-    public JsonElement getDriverById(Long driverId)
-    {
-        return RetrofitUtil.executeInBlock(driverService.getDriverById(driverId));
+    public Object getDriverById(Long driverId) {
+        return driverService.getDriverById(driverId);
     }
 
-    public JsonElement getDriverOfAuthorizedUser(Long userId)
-    {
-        return RetrofitUtil.executeInBlock(driverService.getDriverOfAuthorizedUser(userId));
+    public Object getDriverOfAuthorizedUser(Long userId) {
+        return driverService.getDriverOfAuthorizedUser(userId);
     }
 
 }

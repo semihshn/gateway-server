@@ -127,3 +127,10 @@ or
 <span style="color:red">Require JWT</span>
 
 <hr/>
+
+# Docker
+
+- Open terminal
+- Go to gateway-server directory
+- Run command that ``` docker run build -t gateway-server-image .```
+- Run command that ``` docker run --name gateway-server-container -p 5555:5555 gateway-server-image ```

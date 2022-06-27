@@ -1,6 +1,5 @@
 package com.semihshn.gatewayserver.ws;
 
-import com.google.gson.JsonElement;
 import com.semihshn.gatewayserver.business.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,7 @@ public class PassengerController {
     private PassengerService passengerService;
 
     @PostMapping
-    public ResponseEntity<?> savePassenger(@RequestBody JsonElement passenger)
+    public ResponseEntity<?> savePassenger(@RequestBody Object passenger)
     {
         return ResponseEntity.ok(passengerService.savePassenger(passenger));
     }
