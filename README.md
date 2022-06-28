@@ -143,3 +143,9 @@ or
 - Run command that ``` docker run build -t payment-service-image . ```
 - Go to gateway-server directory with cd command
 - Run command that ``` docker-compose up```
+
+## or
+
+- Open terminal
+- Go to gateway-server directory with cd command
+- Run command that ```docker-compose -f docker-compose_v2.yml up```
