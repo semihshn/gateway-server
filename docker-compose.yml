@@ -1,0 +1,76 @@
+version: '3'
+services:
+
+  gateway-server:
+    image: gateway-server-image
+    container_name: gateway-server-container
+    ports:
+      - '5555:5555'
+    environment:
+      - SECURE_KEY_USERNAME=randomSecureKeyUsername!
+      - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+      - PASSENGER_SERVICE_URL=172.24.2.4:4444
+      - DRIVER_SERVICE_URL=172.24.2.5:3333
+    networks:
+      microservicesNetwork:
+        ipv4_address: 172.24.2.6
+
+  driver-service:
+    image: driver-service-image
+    container_name: driver-service-container
+    ports:
+      - '3333:3333'
+    environment:
+      - NOTIFICATION_SERVICE_URL=172.24.2.3:8888
+      - PAYMENT_SERVICE_URL=172.24.2.2:7777
+      - SECURE_KEY_USERNAME=randomSecureKeyUsername!
+      - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+    networks:
+      microservicesNetwork:
+        ipv4_address: 172.24.2.5
+
+  passenger-service:
+    image: passenger-service-image
+    container_name: passenger-service-container
+    ports:
+      - '4444:4444'
+    environment:
+      - PAYMENT_SERVICE_URL=172.24.2.2:7777
+      - SECURE_KEY_USERNAME=randomSecureKeyUsername!
+      - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+    networks:
+      microservicesNetwork:
+        ipv4_address: 172.24.2.4
+
+  notification-service:
+    image: notification-service-image
+    container_name: notification-service-container
+    ports:
+      - '8888:8888'
+    environment:
+      - SECURE_KEY_USERNAME=randomSecureKeyUsername!
+      - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+    networks:
+      microservicesNetwork:
+        ipv4_address: 172.24.2.3
+
+  payment-service:
+    image: payment-service-image
+    container_name: payment-service-container
+    ports:
+      - '7777:7777'
+    environment:
+      - SECURE_KEY_USERNAME=randomSecureKeyUsername!
+      - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+    networks:
+      microservicesNetwork:
+        ipv4_address: 172.24.2.2
+
+networks:
+  microservicesNetwork:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.24.2.0/16
+          gateway: 172.24.2.1

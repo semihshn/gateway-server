@@ -131,6 +131,15 @@ or
 # Docker
 
 - Open terminal
-- Go to gateway-server directory
+- Go to gateway-server directory with cd command
 - Run command that ``` docker run build -t gateway-server-image .```
-- Run command that ``` docker run --name gateway-server-container -p 5555:5555 gateway-server-image ```
+- Go to driver-service directory with cd command
+- Run command that ``` docker run build -t driver-service-image . ```
+- Go to passenger-service directory with cd command
+- Run command that ``` docker run build -t passenger-service-image . ```
+- Go to notification-service directory with cd command
+- Run command that ``` docker run build -t notification-service-image . ```
+- Go to payment-service directory with cd command
+- Run command that ``` docker run build -t payment-service-image . ```
+- Go to gateway-server directory with cd command
+- Run command that ``` docker-compose up```
