@@ -10,6 +10,6 @@ FROM mcr.microsoft.com/java/jre:17-zulu-alpine
 WORKDIR /app
 COPY --from=compiler /usr/src/app/target/gateway-server-0.0.2-SNAPSHOT.jar .
 
-ENTRYPOINT ["java", "-jar", "gateway-server-0.0.2-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "gateway-server-0.0.2-SNAPSHOT.jar"]
 
 EXPOSE 5555

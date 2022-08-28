@@ -1,10 +1,34 @@
 # Diagram
 
-<img src="img.png"/>
+<img src="microservices_diagram.png"/>
 
 - As Gateway server monolith, I used the SOA architecture infrastructure because it didn't have much room to grow, so we can say that SOA is a layered architecture, but it does give us strength, if the project grows, not as much as a hexagonal and DDD-enhanced structure
 
-<br/>
+<hr/>
+
+# Docker
+
+- Open terminal
+- Go to gateway-server directory with cd command
+- Run command that ``` docker run build -t gateway-server-image .```
+- Go to driver-service directory with cd command
+- Run command that ``` docker run build -t driver-service-image . ```
+- Go to passenger-service directory with cd command
+- Run command that ``` docker run build -t passenger-service-image . ```
+- Go to notification-service directory with cd command
+- Run command that ``` docker run build -t notification-service-image . ```
+- Go to payment-service directory with cd command
+- Run command that ``` docker run build -t payment-service-image . ```
+- Go to gateway-server directory with cd command
+- Run command that ``` docker-compose up```
+
+## or
+
+- Open terminal
+- Go to gateway-server directory with cd command
+- Run command that ```docker-compose -f docker-compose_v2.yml up```
+
+<hr/>
 
 # Documentation
 
@@ -125,27 +149,3 @@ or
 <span style="color:red">DELETE</span>
 
 <span style="color:red">Require JWT</span>
-
-<hr/>
-
-# Docker
-
-- Open terminal
-- Go to gateway-server directory with cd command
-- Run command that ``` docker run build -t gateway-server-image .```
-- Go to driver-service directory with cd command
-- Run command that ``` docker run build -t driver-service-image . ```
-- Go to passenger-service directory with cd command
-- Run command that ``` docker run build -t passenger-service-image . ```
-- Go to notification-service directory with cd command
-- Run command that ``` docker run build -t notification-service-image . ```
-- Go to payment-service directory with cd command
-- Run command that ``` docker run build -t payment-service-image . ```
-- Go to gateway-server directory with cd command
-- Run command that ``` docker-compose up```
-
-## or
-
-- Open terminal
-- Go to gateway-server directory with cd command
-- Run command that ```docker-compose -f docker-compose_v2.yml up```

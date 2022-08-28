@@ -1,4 +1,5 @@
 package com.semihshn.gatewayserver.core.security;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +19,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         Authentication authentication = jwtProvider.getAuthentication(request);
 
-        if (authentication != null && jwtProvider.isTokenValid(request))
-        {
+        if (authentication != null && jwtProvider.isTokenValid(request)) {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
