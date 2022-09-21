@@ -23,6 +23,10 @@ public class DriverService {
         return driverService.getDriverById(driverId);
     }
 
+    public Object getAllDriver() {
+        return driverService.getAllDriver();
+    }
+
     public Object getDriverOfAuthorizedUser(Long userId) {
         return driverService.getDriverOfAuthorizedUser(userId);
     }

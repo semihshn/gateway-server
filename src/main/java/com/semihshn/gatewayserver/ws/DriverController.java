@@ -32,6 +32,12 @@ public class DriverController {
         return ResponseEntity.ok(driverService.getDriverById(driverId));
     }
 
+    @GetMapping("/retrieveAll")
+    public ResponseEntity<?> getAllDriver()
+    {
+        return ResponseEntity.ok(driverService.getAllDriver());
+    }
+
     @GetMapping("authed/{userId}")
     public ResponseEntity<?> getDriverOfAuthorizedUser(@PathVariable Long userId)
     {

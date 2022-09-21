@@ -20,6 +20,8 @@ public interface IDriverService {
     @GetMapping("{driverId}")
     Object getDriverById(@PathVariable("driverId") Long driverId);
 
+    @GetMapping()
+    Object getAllDriver();
 
     @GetMapping("/users/{userId}")
     Object getDriverOfAuthorizedUser(@PathVariable("userId") Long userId);
