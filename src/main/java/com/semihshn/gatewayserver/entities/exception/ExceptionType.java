@@ -7,7 +7,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ExceptionType {
 
-    GENERIC_EXCEPTION(1, "Bilinmeyen bir sorun oluştu");
+    GENERIC_EXCEPTION(1, "Bilinmeyen bir sorun oluştu"),
+
+    AUTHENTICATION_ERROR(4001, "Yetkiniz yok"),
+    ALREADY_EXISTS(4002, "Zaten mevcut"),
+
+    REFRESH_TOKEN(5001, "Refresh Token Verilemez");
 
     private final Integer code;
     private final String message;

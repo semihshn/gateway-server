@@ -9,11 +9,15 @@ services:
     environment:
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
-      - PASSENGER_SERVICE_URL=172.24.2.4:4444
-      - DRIVER_SERVICE_URL=172.24.2.5:3333
+      - PASSENGER_SERVICE_URL=passenger-service:4444
+      - DRIVER_SERVICE_URL=driver-service:3333
+      - DATABASE_URL=jdbc:h2:mem:db_gateway
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=1234
+      - JWT_PUBLIC_KEY=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmKUXKxF3hJrntm3+BAWnjD5vup4DUHqmg9ewXbkTxHufpxcpjFTUOTPg9j30kT4L1pNHp3HbrJ5mu15MjiOgSvIBNrjieVTOID1X1mo7EsFwg4Gs4bgX3+MtUxNueSZ9qCgiWI+Q5c71S9ZqFE4VfUKsXphnzGMI49fZRSpv10irsBaOSDJ+iLroNJoH3SdvzJC0hjTUatlpVENv/36sRKm3E1xIph9zjSsoawaLSzpw1kl9ZJ76OQ9l3LdkGG58qhNICnFrguR0zAhT/eWvd6y5s1sDwl8FMQ0PbC0xZuIHwX9Cs6NyPaEffPQdFcqRSDh/6NMC0EbYoT3UFB7VRQIDAQAB
+      - JWT_PRIVATE_KEY=MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCYpRcrEXeEmue2bf4EBaeMPm+6ngNQeqaD17BduRPEe5+nFymMVNQ5M+D2PfSRPgvWk0encdusnma7XkyOI6BK8gE2uOJ5VM4gPVfWajsSwXCDgazhuBff4y1TE255Jn2oKCJYj5DlzvVL1moUThV9QqxemGfMYwjj19lFKm/XSKuwFo5IMn6Iuug0mgfdJ2/MkLSGNNRq2WlUQ2//fqxEqbcTXEimH3ONKyhrBotLOnDWSX1knvo5D2Xct2QYbnyqE0gKcWuC5HTMCFP95a93rLmzWwPCXwUxDQ9sLTFm4gfBf0Kzo3I9oR989B0VypFIOH/o0wLQRtihPdQUHtVFAgMBAAECggEAagu3jsoxuERN2iWMJYswHXR69rE0KEMtT8cW1eXwX75q6hBjYwTD84GhNjFQqV7rpoTncOLe9IuPX3hhwxXpFGgQg83qONS75xX24hUnOR5+Zj4+twnIPFh9cou7YhtljN9lDRWgWqdvLuKlC7o7n6wkSAulgQ8EbBXW8gBLdsoJAR9SZqDHMvGe95Pm4/s3SUqsFRw0cbufIBJ4XcLq9JKkecidbxihYfFvEZNIGN2GDc3x/w7SOL+EbrJcH40Aj/VKBzGChWONJaWlbq1bwBZZc93WcwYa8Zz0T3caMEELo9NW2KAUqq3tGxreQfZzcqeBrGL3VoeZUYgZxgEUeQKBgQDLzA0HIq7lTu1HrqZR3E3MaZMPBB76OXL5ndiQRCwDjv4ZGTArvxE2wASw2VxcNHq4GF+I2hdJlMkqG77ZiLExFm8kRLTRmRf1zIt9ISleQ74hpecAW06PxF//Qj0pxzxkXajoeigM29NW11G6UBmZ4ylbxTwZXzz0STWw9Fef9wKBgQC/vr7wt88oKrI2H9nJru1jn29IvEF/eisXBbjKV4CJM/3QiKrDIfg0iGcn4P+mes/gQwCdnsz/wUntLnNyuM0SYKfZzEL5Kt0onaj4nnF6I5Sq6OYKCFG6Dm3xiljfOQbDyGva+Pk8OylbERKHIo0enL2cVGnDb2cd2340szMdowKBgC8WGDR72Pj2QXB8c8UaJ4eBJQ8lHpslxuDRjYXXmmvAEAlwfma9IJcLyompzuMm5OvABeKysQq5K7lk67WLFZWH32n7zeNXgeeyuM/SZ6J1+GoB0NuOPRqOfreVcFhExjlSQoJkJvjBmZTI7wMjGqcpixa+/WHHVWgDujoGWnCFAoGARiUapucnQpN0BHbcbnqu314JEPvFnkPsFY0DUAp4vDin5qzIg4Ae0+D+k8ks3RNajrkUNZVNe1aTm8/9bf+LDekMHpIqAgsbQuuCUAlui/cOQQPYe90VQNJciBtLbcXn4qGkS0P/sXgXJfh15bfPFl7Swqji1BsiBvswDUltLq8CgYEAsV7+sSszLSU/y3CCGyAs9ECshfmYFctoReRN2JQ0OEL5bFMwAg/Ysiwvf/TBZl5aE6GGtuSe0nIrlcD0+DvBqzW6UmHV9XHsX/qiLNPU/BvNPiwjS9W/Je9w8nlildXRQpaS0tJu4CTmIpI6OpWTCEv79YcUIQ/0rQpNHPheBx8=
     networks:
-      microservicesNetwork:
-        ipv4_address: 172.24.2.6
+      - microservicesNetwork
 
   driver-service:
     image: semihshn/freetaxi:driver-service
@@ -21,13 +25,23 @@ services:
     ports:
       - '3333:3333'
     environment:
-      - NOTIFICATION_SERVICE_URL=172.24.2.3:8888
-      - PAYMENT_SERVICE_URL=172.24.2.2:7777
+      - NOTIFICATION_SERVICE_URL=notification-service:8888
+      - PAYMENT_SERVICE_URL=payment-service:7777
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+      - KAFKA_GROUP_ID=driver-group-id
+      - KAFKA_BOOTSTRAP_SERVERS=broker:29092
+      - ELASTIC_SEARCH_DOMAIN=elasticsearch
+      - kafka.consumer.enable.auto.commit=true
+      - kafka.consumer.auto.commit.interval.ms=1000
+      - kafka.consumer.auto.offset.reset=earliest
+      - kafka.consumer.max.poll.records=1
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
-      microservicesNetwork:
-        ipv4_address: 172.24.2.5
+      - microservicesNetwork
 
   passenger-service:
     image: semihshn/freetaxi:passenger-service
@@ -35,12 +49,11 @@ services:
     ports:
       - '4444:4444'
     environment:
-      - PAYMENT_SERVICE_URL=172.24.2.2:7777
+      - PAYMENT_SERVICE_URL=payment-service:7777
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
     networks:
-      microservicesNetwork:
-        ipv4_address: 172.24.2.4
+      - microservicesNetwork
 
   notification-service:
     image: semihshn/freetaxi:notification-service
@@ -51,8 +64,7 @@ services:
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
     networks:
-      microservicesNetwork:
-        ipv4_address: 172.24.2.3
+      - microservicesNetwork
 
   payment-service:
     image: semihshn/freetaxi:payment-service
@@ -63,14 +75,90 @@ services:
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
     networks:
-      microservicesNetwork:
-        ipv4_address: 172.24.2.2
+      - microservicesNetwork
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - microservicesNetwork
+
+  broker:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      GROUP_ID: driver-group-id
+      KAFKA_CREATE_TOPICS: "contact-info-events"
+    networks:
+      - microservicesNetwork
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=broker
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=broker:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+      - KAFKA_CLUSTERS_0_READONLY=true
+    networks:
+      - microservicesNetwork
+
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    container_name: elastic-search
+    platform: linux/x86_64
+    environment:
+      - discovery.type=single-node
+      - max_open_files=65536
+      - max_content_length_in_bytes=100000000
+      - transport.host= elasticsearch
+    volumes:
+      - $HOME/app:/var/app
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - microservicesNetwork
+
+  postgresql:
+    image: postgres
+    container_name: postgresql
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 12345
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    networks:
+      - microservicesNetwork
 
 networks:
   microservicesNetwork:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.24.2.0/16
-          gateway: 172.24.2.1

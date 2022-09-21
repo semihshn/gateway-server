@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import com.semihshn.gatewayserver.core.security.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -47,7 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/api/authentication/**").permitAll()//login and register pre-path
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();
+
+        http.headers().frameOptions().sameOrigin();
 
         http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

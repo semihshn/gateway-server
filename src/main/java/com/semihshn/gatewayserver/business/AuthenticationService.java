@@ -3,29 +3,45 @@ package com.semihshn.gatewayserver.business;
 import com.semihshn.gatewayserver.core.security.JwtProvider;
 import com.semihshn.gatewayserver.core.security.UserPrincipal;
 import com.semihshn.gatewayserver.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.semihshn.gatewayserver.entities.exception.ExceptionType;
+import com.semihshn.gatewayserver.entities.exception.SemAuthenticationException;
+import com.semihshn.gatewayserver.entities.exception.SemUserAlreadyExistsException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
+@RequiredArgsConstructor
 public class AuthenticationService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
+    private final UserService userService;
 
-    @Autowired
-    private JwtProvider jwtProvider;
+    public String signInAndReturnJWT(User signInRequest) {
+        Authentication authentication = null;
 
-    public String signInAndReturnJWT(User signInRequest)
-    {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword())
-        );
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword())
+            );
+        } catch (Exception e) {
+            throw new SemAuthenticationException(ExceptionType.AUTHENTICATION_ERROR, "Kullanıcı adı veya şifreniz hatalı");
+        }
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
         return jwtProvider.generateToken(userPrincipal);
+    }
+
+    public User signUp(User user) {
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
+            throw new SemUserAlreadyExistsException(ExceptionType.ALREADY_EXISTS, "Böyle bir kullanıcı zaten mevcut");
+        }
+        return userService.saveUser(user);
     }
 }
