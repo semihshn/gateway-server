@@ -1,7 +1,6 @@
 package com.semihshn.gatewayserver.ws;
 
 import com.semihshn.gatewayserver.business.AuthenticationService;
-import com.semihshn.gatewayserver.business.request.RefreshTokenRequest;
 import com.semihshn.gatewayserver.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

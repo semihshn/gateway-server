@@ -36,7 +36,7 @@ services:
       - kafka.consumer.auto.commit.interval.ms=1000
       - kafka.consumer.auto.offset.reset=earliest
       - kafka.consumer.max.poll.records=1
-      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=12345
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -150,6 +150,8 @@ services:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: 12345
+    networks:
+      - microservicesNetwork
 
   adminer:
     image: adminer
