@@ -22,6 +22,8 @@ services:
   driver-service:
     image: semihshn/freetaxi:driver-service
     container_name: driver-service-container
+    depends_on:
+      - elasticsearch
     ports:
       - '3333:3333'
     environment:
@@ -29,7 +31,7 @@ services:
       - PAYMENT_SERVICE_URL=payment-service:7777
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
-      - KAFKA_GROUP_ID=driver-group-id
+      - KAFKA_GROUP_ID=driver-group
       - KAFKA_BOOTSTRAP_SERVERS=broker:29092
       - ELASTIC_SEARCH_DOMAIN=elasticsearch
       - kafka.consumer.enable.auto.commit=true
@@ -40,6 +42,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=12345
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     networks:
       - microservicesNetwork
 
@@ -124,7 +128,6 @@ services:
     networks:
       - microservicesNetwork
 
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     container_name: elastic-search
@@ -133,12 +136,13 @@ services:
       - discovery.type=single-node
       - max_open_files=65536
       - max_content_length_in_bytes=100000000
-      - transport.host= elasticsearch
+      - transport.host= 127.0.0.1
+      - http.host=0.0.0.0
     volumes:
       - $HOME/app:/var/app
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - '9200:9200'
+      - '9300:9300'
     networks:
       - microservicesNetwork
 
@@ -147,7 +151,7 @@ services:
     container_name: postgresql
     restart: always
     ports:
-      - 5432:5432
+      - '5432:5432'
     environment:
       POSTGRES_PASSWORD: 12345
     networks:
@@ -158,9 +162,18 @@ services:
     container_name: adminer
     restart: always
     ports:
-      - 8081:8080
+      - '8081:8080'
     networks:
       - microservicesNetwork
+
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
 
 networks:
   microservicesNetwork:

@@ -25,6 +25,8 @@ services:
     depends_on:
       - broker
       - postgresql
+      - elasticsearch
+      - redis
     ports:
       - '3333:3333'
     environment:
@@ -43,6 +45,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=12345
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     networks:
       - microservicesNetwork
 
@@ -127,7 +131,6 @@ services:
     networks:
       - microservicesNetwork
 
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     container_name: elastic-search
@@ -146,17 +149,37 @@ services:
       - microservicesNetwork
 
   postgresql:
-    image: postgres:11.1-alpine
-    platform: linux/x86_64
+    image: postgres
     container_name: postgresql
-    volumes:
-      - ./postgresql/:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_PASSWORD=12345
+    restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: 12345
     networks:
       - microservicesNetwork
 
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - '8081:8080'
+    networks:
+      - microservicesNetwork
+
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+
 networks:
   microservicesNetwork:
+    driver: bridge
+volumes:
+  cache:
+    driver: local
