@@ -31,16 +31,11 @@ services:
       - '3333:3333'
     environment:
       - NOTIFICATION_SERVICE_URL=notification-service:8888
-      - PAYMENT_SERVICE_URL=payment-service:7777
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
-      - KAFKA_GROUP_ID=driver-group-id
+      - KAFKA_GROUP_ID=driver-group
       - KAFKA_BOOTSTRAP_SERVERS=broker:29092
       - ELASTIC_SEARCH_DOMAIN=elasticsearch
-      - kafka.consumer.enable.auto.commit=true
-      - kafka.consumer.auto.commit.interval.ms=1000
-      - kafka.consumer.auto.offset.reset=earliest
-      - kafka.consumer.max.poll.records=1
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=12345
@@ -81,6 +76,8 @@ services:
     environment:
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+      - KAFKA_GROUP_ID=payment-group
+      - KAFKA_BOOTSTRAP_SERVERS=broker:29092
     networks:
       - microservicesNetwork
 
@@ -170,16 +167,18 @@ services:
 
   redis:
     image: redis:6.2-alpine
+    container_name: redis-container
     restart: always
     ports:
       - '6379:6379'
     command: redis-server --save 20 1 --loglevel warning
     volumes:
       - cache:/data
+    networks:
+      - microservicesNetwork
 
 networks:
   microservicesNetwork:
-    driver: bridge
 volumes:
   cache:
     driver: local
