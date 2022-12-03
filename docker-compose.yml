@@ -65,6 +65,9 @@ services:
     environment:
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+      - TWILIO_ACCOUNT_SID=test
+      - TWILIO_AUTH_TOKEN=test
+      - TWILIO_PHONE_NUMBER=test
     networks:
       - microservicesNetwork
 

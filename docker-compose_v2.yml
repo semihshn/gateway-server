@@ -62,6 +62,9 @@ services:
     environment:
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+      - TWILIO_ACCOUNT_SID=test
+      - TWILIO_AUTH_TOKEN=test
+      - TWILIO_PHONE_NUMBER=test
     networks:
       - microservicesNetwork
 
@@ -73,6 +76,8 @@ services:
     environment:
       - SECURE_KEY_USERNAME=randomSecureKeyUsername!
       - SECURE_KEY_PASSWORD=randomSecureKeyPassword!
+      - KAFKA_GROUP_ID=payment-group
+      - KAFKA_BOOTSTRAP_SERVERS=broker:29092
     networks:
       - microservicesNetwork
 
